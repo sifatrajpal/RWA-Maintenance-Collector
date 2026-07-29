@@ -2,6 +2,7 @@
 
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
+import { createAdminClient } from '@/lib/supabase/admin'
 
 type NewFlat = {
   firstName: string
@@ -10,12 +11,24 @@ type NewFlat = {
   flatNumber: string
 }
 
-export async function addFlat(flat: NewFlat) {
+export async function addFlat(flat: NewFlat, email: string) {
   const supabase = await createClient()
+  const { data, error: inviteError } = await createAdminClient().auth.admin.inviteUserByEmail(email)
+
+  if (inviteError || !data.user) {
+    console.error("Invitation failed:", inviteError?.message)
+    return { success: false, message: inviteError?.message ?? 'Invite failed' }
+  }
+
+  const invitedUserId = data.user.id
+
+
+
 
   const { error } = await supabase
     .from('profiles')
     .insert({
+      id: invitedUserId,
       first_name: flat.firstName,
       last_name: flat.lastName,
       phone_number: flat.phoneNumber,
