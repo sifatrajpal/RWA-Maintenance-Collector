@@ -1,54 +1,55 @@
-'use client'
+    'use server'
 
-import { createClient } from "@/lib/supabase/server"
-
-
-export async function getMyInvoice(){
-    const supabase =  await createClient();
+    import { createClient } from "@/lib/supabase/server"
 
 
-    const {data: {user}} = await supabase.auth.getUser();
+    export async function getMyInvoices(){
+        const supabase =  await createClient();
 
-    if(!user){
-        return []
+
+        const {data: {user}} = await supabase.auth.getUser();
+
+        if(!user){
+            return []
+        }
+
+        const { data, error } = await supabase
+        .from('invoices')
+        .select('id, amount, due_date, status')
+        .eq('profile_id', user.id)
+
+
+        if(error){
+            console.log(error.message);
+            return []
+            
+        }
+        return data;
     }
 
-    const { data, error } = await supabase
-    .from('invoices')
-    .select('id, amount, due_date, status')
-    .eq('profile_id', user.id)
 
-    if(error){
-        console.log(error.message);
-        return []
+    export async function getMyPaymentHistory(){
+        const supabase = await createClient();
+        const { data: { user } } = await supabase.auth.getUser()
+
+        if (!user) {
+            return []
+        }
+
+
+        const { data, error } = await supabase
+        .from('invoices')
+        .select('id, amount, due_date, payments(id, amount_paid, payment_mode, created_at)')
+        .eq('profile_id', user.id)
+
+        if (error) {
+            console.error(error.message)
+            return []
+        }
         
+        return data
+
     }
-    return data;
-}
-
-
-export async function getMyPaymentHistory(){
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser()
-
-    if (!user) {
-        return []
-    }
-
-
-    const { data, error } = await supabase
-    .from('invoices')
-    .select('id, amount, due_date, payments(id, amount_paid, payment_mode, created_at)')
-    .eq('profile_id', user.id)
-
-    if (error) {
-        console.error(error.message)
-        return []
-    }
-    
-    return data
-
-}
 
 
 

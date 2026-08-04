@@ -1,19 +1,43 @@
 import { getFlats } from './actions'
 import FlatForm from './FlatForm'
 
+
+
 export default async function ManageFlatsPage() {
-  const flats = await getFlats()
+
+// id, first_name, last_name, flat_number, phone_number'
+  type flatsDetailsType = {
+    id: string
+    first_name: string
+    last_name: string
+    flat_number: string
+    phone_number: string
+
+  }
+
+
+  const flatsDetails: flatsDetailsType[] = await getFlats();
+
+  
 
   return (
     <div>
-      <FlatForm />
-      <ul>
-        {flats.map((flat) => (
-          <li key={flat.id}>
-            {flat.first_name} {flat.last_name} — {flat.flat_number}
-          </li>
-        ))}
-      </ul>
+      <FlatForm></FlatForm>
+      <div>
+        {flatsDetails.map((flatsDetail) => {
+          return(
+            <div key={flatsDetail.id}>
+              <ul>
+                <li >{flatsDetail.id}</li>
+                <li >{flatsDetail.first_name}</li>
+                <li >{flatsDetail.last_name}</li>
+                <li >{flatsDetail.flat_number}</li>
+                <li>{flatsDetail.phone_number}</li>
+              </ul>
+            </div>
+          )
+        })}
+      </div>
     </div>
   )
 }

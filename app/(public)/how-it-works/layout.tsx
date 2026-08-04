@@ -1,4 +1,4 @@
-export default function PublicLayout({
+export default function how_it_works_Layout({
   children,
 }: {
   children: React.ReactNode

@@ -1,28 +1,36 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { addExpense } from './actions'
 
 export default function ExpenseForm() {
-  const [amount, setAmount] = useState(0)
-  const [type, setType] = useState('')
-  const [description, setDescription] = useState('')
-  const [dueDate, setDueDate] = useState('')
 
-  async function handleAddExpense() {
-    const result = await addExpense({
-      amount,
-      type,
-      description,
-      dueDate,
-    })
 
-    if (!result.success) {
-      // show result.message
-    }
+
+  type ExpenseType = {
+    amount: number
+    type: string
+    description: string
+    dueDate: string
   }
 
+  const [expenses, setExpenses] = useState<ExpenseType>({amount: 0, type: '', description: '', dueDate: ''});
+
+  function handleExpense(e: React.ChangeEvent<HTMLInputElement>){
+    setExpenses({...expenses, [e.target.name]: e.target.value})
+  }
+
+
+
   return (
-    <button onClick={handleAddExpense}>Log Expense</button>
+
+    <div>
+      <input type="number" placeholder='Enter amount' name='amount' value={expenses.amount} onChange={handleExpense}/>
+      <input type="text" placeholder='Enter type' name='type' value={expenses.type} onChange={handleExpense}/>
+      <input type="text" placeholder='Enter description'  name= 'description' value={expenses.description}onChange={handleExpense}/>
+      <input type="text" placeholder='Enter dueDate' name= 'dueDate' value={expenses.dueDate} onChange={handleExpense}/>
+      <button onClick={() => {addExpense(expenses)}}>Log Expense</button>
+    </div>
+
   )
 }

@@ -6,6 +6,7 @@ export default async function DuesOverviewPage() {
 
   return (
     <ul>
+      <li>hello</li>
       {invoices.map((invoice) => (
         <li key={invoice.id}>
           {invoice.profiles?.[0]?.flat_number} — ₹{invoice.amount} — {invoice.status}
