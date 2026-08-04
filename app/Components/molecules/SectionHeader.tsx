@@ -11,11 +11,13 @@ const sectionHeaderSizes = {
   sm: 'text-[19px] md:text-[22px] leading-[1.4] md:leading-[1.5]',
 };
 
+export type sectionHeaderSizeProp = keyof typeof sectionHeaderSizes;
+
 export type SectionHeaderProps = {
   title: string;
   description?: string;
   eyebrow: string;
-  size?: keyof typeof sectionHeaderSizes;
+  size?: sectionHeaderSizeProp;
   theme?: keyof typeof themes;
 };
 

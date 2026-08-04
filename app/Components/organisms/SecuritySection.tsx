@@ -24,5 +24,6 @@ export default function SecuritySection() {
         </StampBadge>
       </div>
     </div>
+
   );
 }
