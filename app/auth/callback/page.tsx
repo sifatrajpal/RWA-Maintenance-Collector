@@ -19,10 +19,10 @@ export default function AuthCallbackPage() {
 
     if (access_token && refresh_token) {
       supabase.auth.setSession({ access_token, refresh_token }).then(() => {
-        router.push('/login')
+        window.location.href = '/update-password'   // was router.push
       })
-    } else {
-      router.push('/login')
+    }else {
+      router.push('/login')   // revert this back
     }
   }, [router])
 

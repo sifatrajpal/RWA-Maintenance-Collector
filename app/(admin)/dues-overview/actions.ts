@@ -7,7 +7,7 @@ export async function getDuesOverview() {
 
   const { data, error } = await supabase
     .from('invoices')
-    .select('id, amount, status, profiles(first_name, last_name, flat_number)')
+    .select('id, amount, status, due_date, profiles(first_name, last_name, flat_number)')
 
   if (error) {
     console.error(error.message)

@@ -1,17 +1,35 @@
-import { getDuesOverview } from './actions'
-
+import { getDuesOverview } from "./actions";
+import { getSocietyContext } from "@/lib/getSocietyContext";
+import PageHeader from "@/app/Components/molecules/PageHeader";
+import DuesStatsBar from "@/app/Components/organisms/DuesStatsBar";
+import DuesTable from "@/app/Components/organisms/DuesTable";
 
 export default async function DuesOverviewPage() {
-  const invoices = await getDuesOverview()
+    const [dues, { societyName }] = await Promise.all([getDuesOverview(), getSocietyContext()]);
 
-  return (
-    <ul>
-      <li>hello</li>
-      {invoices.map((invoice) => (
-        <li key={invoice.id}>
-          {invoice.profiles?.[0]?.flat_number} — ₹{invoice.amount} — {invoice.status}
-        </li>
-      ))}
-    </ul>
-  )
+    const rows = dues.map((d) => ({
+        flat: d.profiles[0].flat_number,
+        resident: `${d.profiles[0].first_name} ${d.profiles[0].last_name}`,
+        amount: d.amount,
+        status: d.status,
+        dueDate: d.due_date,
+    }));
+
+    const totalBilled = rows.reduce((s, r) => s + r.amount, 0);
+    const collected = rows.filter(r => r.status === "success").reduce((s, r) => s + r.amount, 0);
+    const pending = rows.filter(r => r.status === "pending").reduce((s, r) => s + r.amount, 0);
+    const failed = rows.filter(r => r.status === "failed").reduce((s, r) => s + r.amount, 0);
+
+    return (
+        <div>
+            <PageHeader
+                title="Dues Overview"
+                subtitle={`${societyName.toUpperCase()} · CURRENT BILLING CYCLE`}
+                actionLabel="Generate invoices"
+                actionHref="/generate-invoices"
+            />
+            <DuesStatsBar totalBilled={totalBilled} collected={collected} pending={pending} failed={failed} />
+            <DuesTable rows={rows} />
+        </div>
+    )
 }

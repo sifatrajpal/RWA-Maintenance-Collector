@@ -15,7 +15,7 @@ type ButtonProps = {
 
 export function Button({ variant = 'dark', children, onClick }: ButtonProps) {
   return (
-    <button onClick={onClick} className={`px-6 py-3 rounded-full font-semibold ${variantStyles[variant]}`}>
+    <button onClick={onClick} className={`px-6 py-3 rounded-full font-semibold cursor-pointer ${variantStyles[variant]}`}>
       {children}
     </button>
   );

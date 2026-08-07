@@ -67,7 +67,7 @@ export async function getFlats() {
 
   const { data, error } = await supabase
     .from('profiles')
-    .select('id, first_name, last_name, flat_number, phone_number')
+    .select('id, first_name, last_name, flat_number, phone_number, role')
     .eq('role', 'resident')
 
   if (error) {

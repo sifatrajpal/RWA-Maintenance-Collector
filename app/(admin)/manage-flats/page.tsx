@@ -1,43 +1,24 @@
-import { getFlats } from './actions'
-import FlatForm from './FlatForm'
-
-
+import { getFlats } from "./actions";
+import { getSocietyContext } from "@/lib/getSocietyContext";
+import PageHeader from "@/app/Components/molecules/PageHeader";
+import AddResidentForm from "@/app/Components/organisms/AddResidentForm";
+import ResidentsTable from "@/app/Components/organisms/ResidentsTable";
 
 export default async function ManageFlatsPage() {
+    const [flats, { societyName }] = await Promise.all([getFlats(), getSocietyContext()]);
 
-// id, first_name, last_name, flat_number, phone_number'
-  type flatsDetailsType = {
-    id: string
-    first_name: string
-    last_name: string
-    flat_number: string
-    phone_number: string
+    const rows = flats.map((f) => ({
+        flat: f.flat_number,
+        resident: `${f.first_name} ${f.last_name}`,
+        phone: f.phone_number,
+        role: f.role,
+    }));
 
-  }
-
-
-  const flatsDetails: flatsDetailsType[] = await getFlats();
-
-  
-
-  return (
-    <div>
-      <FlatForm></FlatForm>
-      <div>
-        {flatsDetails.map((flatsDetail) => {
-          return(
-            <div key={flatsDetail.id}>
-              <ul>
-                <li >{flatsDetail.id}</li>
-                <li >{flatsDetail.first_name}</li>
-                <li >{flatsDetail.last_name}</li>
-                <li >{flatsDetail.flat_number}</li>
-                <li>{flatsDetail.phone_number}</li>
-              </ul>
-            </div>
-          )
-        })}
-      </div>
-    </div>
-  )
+    return (
+        <div>
+            <PageHeader title="Manage Flats" subtitle={`${societyName.toUpperCase()} · ${rows.length} FLATS REGISTERED`} />
+            <AddResidentForm />
+            <ResidentsTable rows={rows} />
+        </div>
+    )
 }
