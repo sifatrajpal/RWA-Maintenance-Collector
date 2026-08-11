@@ -27,8 +27,10 @@ export async function LoginWithEmailAndPassword(email: string, password: string)
     } else {
       redirect("/resident");
     }
-  } catch (err) {
-    console.error("LOGIN CRASH:", err);
+  } catch (err: any) {
+    console.error("LOGIN CRASH message:", err?.message);
+    console.error("LOGIN CRASH name:", err?.name);
+    console.error("LOGIN CRASH stringified:", JSON.stringify(err));
     return { success: false, message: "Something went wrong. Check server logs." };
   }
 }
