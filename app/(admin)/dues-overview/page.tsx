@@ -7,13 +7,15 @@ import DuesTable from "@/app/Components/organisms/DuesTable";
 export default async function DuesOverviewPage() {
     const [dues, { societyName }] = await Promise.all([getDuesOverview(), getSocietyContext()]);
 
-    const rows = dues.map((d) => ({
-        flat: d.profiles[0].flat_number,
-        resident: `${d.profiles[0].first_name} ${d.profiles[0].last_name}`,
-        amount: d.amount,
-        status: d.status,
-        dueDate: d.due_date,
-    }));
+    const rows = dues
+        .filter((d) => d.profiles && d.profiles.length > 0)
+        .map((d) => ({
+            flat: d.profiles[0].flat_number,
+            resident: `${d.profiles[0].first_name} ${d.profiles[0].last_name}`,
+            amount: d.amount,
+            status: d.status,
+            dueDate: d.due_date,
+        }));
 
     const totalBilled = rows.reduce((s, r) => s + r.amount, 0);
     const collected = rows.filter(r => r.status === "success").reduce((s, r) => s + r.amount, 0);
