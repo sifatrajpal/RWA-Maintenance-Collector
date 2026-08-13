@@ -21,10 +21,10 @@ export default function HomePage() {
         title="The society ledger, closed for good on WhatsApp."
         description="Bahi replaces reminder threads and cash registers with automated monthly bills, one-tap UPI payments, and a running ledger every resident can see for themselves."
         primaryLabel="See how it works"
-        primaryHref="/public/how-it-works"
+        primaryHref="/how-it-works"
         primaryVariant="outline"
         secondaryLabel="Try the demo"
-        secondaryHref="/login/login"
+        secondaryHref="/login"
         secondaryVariant="dark"
       />
 

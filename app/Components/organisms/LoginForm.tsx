@@ -45,6 +45,29 @@ export default function LoginForm({title, description, eyebrow, size}: LoginForm
 
             />
 
+            <div className="flex gap-3 mb-6 mt-5">
+                <Button
+                    variant="outline"
+                    children="Login as Admin"
+                    onClick={() => {
+                        setEmail("rajpalsifat81@gmail.com");
+                        setPassword("Contest@123");
+                    }}
+                    // className="flex-1 rounded-full py-2 text-sm"
+                />
+                <Button
+                    variant="outline"
+                    children="Login as Resident"
+                    onClick={() => {
+                        setEmail("fullydevoted6@gmail.com");
+                        setPassword("Contest@1234");
+                    }}
+                    // className="flex-1 rounded-full py-2 text-sm"
+                />
+            </div>
+
+
+
             <div className="flex justify-between text-sm mt-5">
                 <a href="#" className="text-[#1C2317] underline underline-offset-2">Trouble signing in?</a>
                 <a href="#" className="text-[#1C2317] underline underline-offset-2">New society? Register</a>
