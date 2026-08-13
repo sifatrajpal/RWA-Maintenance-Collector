@@ -1,5 +1,7 @@
+'use client'
 import Logo from "../atoms/Logo";
 import Avatar from "../atoms/Avatar";
+import { signOut } from "@/lib/auth-actions";
 
 type ResidentTopBarProps = { flatNumber: string; societyName: string; userName: string }
 
@@ -13,6 +15,12 @@ export default function ResidentTopBar({ flatNumber, societyName, userName }: Re
                 <span className="text-xs tracking-widest uppercase border border-[#D9D6C7] px-3 py-1.5">
                     FLAT {flatNumber} · {societyName.toUpperCase()}
                 </span>
+                <button
+                    onClick={() => signOut()}
+                    className="text-sm text-[#1C2317] border border-[#D9D6C7] rounded-full px-4 py-1.5 hover:bg-[#1C2317] hover:text-white transition-colors"
+                >
+                    Sign out
+                </button>
                 <Avatar initials={initials} />
             </div>
         </div>

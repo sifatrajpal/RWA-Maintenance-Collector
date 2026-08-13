@@ -4,7 +4,13 @@ import PageHeader from "@/app/Components/molecules/PageHeader";
 import DuesStatsBar from "@/app/Components/organisms/DuesStatsBar";
 import DuesTable from "@/app/Components/organisms/DuesTable";
 
+
+
+
+
+
 export default async function DuesOverviewPage() {
+
     const [dues, { societyName }] = await Promise.all([getDuesOverview(), getSocietyContext()]);
 
 const rows = dues
@@ -12,6 +18,7 @@ const rows = dues
     .map((d) => {
         const profile = Array.isArray(d.profiles) ? d.profiles[0] : d.profiles;
         return {
+            id: d.id,
             flat: profile.flat_number,
             resident: `${profile.first_name} ${profile.last_name}`,
             amount: d.amount,

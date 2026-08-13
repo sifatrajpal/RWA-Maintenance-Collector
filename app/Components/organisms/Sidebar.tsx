@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "../atoms/Logo";
 import Avatar from "../atoms/Avatar";
+import { signOut } from "@/lib/auth-actions";
 
 const navItems = [
     { number: "01", label: "Dues Overview", href: "/dues-overview" },
@@ -42,12 +43,20 @@ export default function Sidebar({ societyName, userName, userRole }: SidebarProp
                 </nav>
             </div>
 
-            <div className="flex items-center gap-3 border-t border-[#33402D] pt-5">
-                <Avatar initials={initials} />
-                <div>
-                    <p className="text-sm">{userName}</p>
-                    <p className="text-xs text-[#8A8A78]">{userRole}</p>
+            <div className="border-t border-[#33402D] pt-5">
+                <div className="flex items-center gap-3 mb-4">
+                    <Avatar initials={initials} />
+                    <div>
+                        <p className="text-sm">{userName}</p>
+                        <p className="text-xs text-[#8A8A78]">{userRole}</p>
+                    </div>
                 </div>
+                <button
+                    onClick={() => signOut()}
+                    className="w-full text-sm  text-[#B8B8A8] hover:text-white hover:border-white border border-[#33402D] rounded-full px-4 py-2 transition-colors"
+                >
+                    Sign out
+                </button>
             </div>
         </aside>
     )

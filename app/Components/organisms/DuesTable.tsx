@@ -1,6 +1,6 @@
 import Badge from "@/app/Components/atoms/Badge";
 
-type DueRow = { flat: string; resident: string; amount: number; status: "pending" | "success" | "failed"; dueDate: string }
+type DueRow = { id: string; flat: string; resident: string; amount: number; status: "pending" | "success" | "failed"; dueDate: string }
 
 const formatDate = (iso: string) =>
     new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
@@ -24,7 +24,7 @@ export default function DuesTable({ rows }: { rows: DueRow[] }) {
                 </thead>
                 <tbody>
                     {rows.map((row) => (
-                        <tr key={row.flat} className="border-t border-[#D9D6C7]">
+                        <tr key={row.id} className="border-t border-[#D9D6C7]">
                             <td className="py-4">{row.flat}</td>
                             <td className="py-4">{row.resident}</td>
                             <td className="py-4 font-mono">₹{row.amount.toLocaleString("en-IN")}</td>
