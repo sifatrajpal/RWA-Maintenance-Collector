@@ -41,7 +41,9 @@ export default function Navbar({ activePage }: NavbarProps) {
 
         <div className="hidden md:flex items-center gap-4.5">
           <Link href="/login" className="text-sm font-semibold">Log in</Link>
-          <Button variant="dark">Try the demo</Button>
+          <Link href="/login">
+            <Button variant="dark">Try the demo</Button>
+          </Link>
         </div>
 
         <button
@@ -70,7 +72,9 @@ export default function Navbar({ activePage }: NavbarProps) {
             <Link href="/login" className="text-sm font-semibold" onClick={() => setIsOpen(false)}>
               Log in
             </Link>
-            <Button variant="dark">Try the demo</Button>
+            <Link href="/login">
+              <Button variant="dark" children="Try Demo" />
+            </Link>
           </div>
         </div>
       )}
