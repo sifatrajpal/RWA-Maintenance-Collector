@@ -63,3 +63,22 @@ export async function getExpenses() {
 
   return data
 }
+
+
+export async function completeExpense(expenseId: string) {
+    console.log("completeExpense called with expenseId:", expenseId);
+
+    const supabase = await createClient();
+    const { data, error } = await supabase
+        .from('expenses')
+        .update({ status: 'success' })
+        .eq('id', expenseId)
+        .select();
+
+    console.log("completeExpense result:", data);
+    console.log("completeExpense error:", error);
+
+    if (error) return { success: false, message: error.message };
+    revalidatePath('/expense-log');
+    return { success: true };
+}

@@ -24,6 +24,7 @@ export default function ExpenseForm() {
 
   return (
 
+    
     <div>
       <input type="number" placeholder='Enter amount' name='amount' value={expenses.amount} onChange={handleExpense}/>
       <input type="text" placeholder='Enter type' name='type' value={expenses.type} onChange={handleExpense}/>

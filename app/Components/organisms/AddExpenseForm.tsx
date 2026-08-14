@@ -12,6 +12,8 @@ export default function AddExpenseForm() {
     const [dueDate, setDueDate] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
 
+    const today = new Date().toISOString().split('T')[0];
+
     async function handleSubmit() {
         const result = await addExpense({
             type: category,
@@ -47,12 +49,20 @@ export default function AddExpenseForm() {
                 />
                 <FormField labelChildren="Amount" placeholder="₹ 0.00" value={amount} type="text" onChange={(e) => setAmount(e.target.value)} />
                 <FormField labelChildren="Description" placeholder="What was this expense for?" value={description} type="text" onChange={(e) => setDescription(e.target.value)} />
-                <FormField labelChildren="Due Date" placeholder="DD/MM/YYYY" value={dueDate} type="text" onChange={(e) => setDueDate(e.target.value)} />
+                <FormField
+                    labelChildren="Due Date"
+                    placeholder="DD/MM/YYYY"
+                    value={dueDate}
+                    type="date"
+                    onChange={(e) => setDueDate(e.target.value)}
+                    min={today}
+                    max="2030-12-31"
+                />
             </div>
 
             {errorMsg && <p className="text-sm text-red-700 mt-2">{errorMsg}</p>}
 
-            <Button variant="dark" children="Add expense" onClick={handleSubmit}  />
+            <Button variant="dark" children="Add expense" onClick={handleSubmit} />
         </div>
-    )
+        )
 }

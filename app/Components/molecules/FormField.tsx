@@ -1,20 +1,20 @@
-import InputBox from "../atoms/InputBox";
 
+import InputBox from "../atoms/InputBox"
 type FormFieldProps = {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
     placeholder: string,
     value: string,
-    type: "text" | "password";
-    labelChildren: string
+    type: "text" | "password" | "number" | "date";
+    labelChildren: string,
+    min?: string,
+    max?: string,
 }
 
-export default function FormField({onChange, placeholder, value, type, labelChildren}: FormFieldProps){
+export default function FormField({onChange, placeholder, value, type, labelChildren, min, max}: FormFieldProps){
     return(
-        <label className="block mb-4 sm:mb-5">
-            <span className="block text-xs tracking-widest uppercase text-[#8A7A4C] mb-2">
-                {labelChildren}
-            </span>
-            <InputBox placeholder={placeholder} onChange={onChange} value={value} type={type} />
+        <label>
+            {labelChildren}
+            <InputBox placeholder={placeholder} onChange={onChange} value={value} type={type} min={min} max={max} />
         </label>
     )
 }

@@ -9,6 +9,7 @@ export default async function ExpenseLogPage() {
     const [expenses, { societyName }] = await Promise.all([getExpenses(), getSocietyContext()]);
 
     const rows = expenses.map((e) => ({
+        id: e.id,
         date: e.due_date,
         category: e.type,
         description: e.description,
