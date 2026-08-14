@@ -1,6 +1,7 @@
 'use client'
 import DuesSummaryCard from "@/app/Components/molecules/DuesSummaryCard";
-import PayNowButton from "@/app/resident/PayNowButton";
+
+import PaymentProofUpload from "@/app/resident/PaymentProofUpload";
 
 type DuesSummaryCardWrapperProps = {
     invoiceId: string;
@@ -8,8 +9,9 @@ type DuesSummaryCardWrapperProps = {
     dueDateLabel: string;
     totalAmount: number;
     lineItems: { label: string; amount: number }[];
-    residentName: string;
-    residentEmail: string;
+    upiId: string;
+    qrCodeUrl: string;
+    bankDetails: string;
 }
 
 export default function DuesSummaryCardWrapper(props: DuesSummaryCardWrapperProps) {
@@ -20,11 +22,11 @@ export default function DuesSummaryCardWrapper(props: DuesSummaryCardWrapperProp
             totalAmount={props.totalAmount}
             lineItems={props.lineItems}
             payButton={
-                <PayNowButton
+                <PaymentProofUpload
                     invoiceId={props.invoiceId}
-                    amount={props.totalAmount}
-                    residentName={props.residentName}
-                    residentEmail={props.residentEmail}
+                    upiId={props.upiId}
+                    qrCodeUrl={props.qrCodeUrl}
+                    bankDetails={props.bankDetails}
                 />
             }
         />

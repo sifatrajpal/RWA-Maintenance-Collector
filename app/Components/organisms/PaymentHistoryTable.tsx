@@ -1,9 +1,8 @@
 'use client'
-
 import Badge from "../atoms/Badge";
 import TextLink from "../atoms/TextLink";
 
-type HistoryRow = { month: string; amount: number; paidOn: string; status: "pending" | "success" | "failed" }
+type HistoryRow = { month: string; amount: number; paidOn: string; status: "pending" | "pending_verification" | "success" | "failed"; proofUrl: string | null }
 
 export default function PaymentHistoryTable({ rows }: { rows: HistoryRow[] }) {
     return (
@@ -24,7 +23,15 @@ export default function PaymentHistoryTable({ rows }: { rows: HistoryRow[] }) {
                         <td className="py-4 font-mono">₹{row.amount.toLocaleString("en-IN")}</td>
                         <td className="py-4">{row.paidOn}</td>
                         <td className="py-4"><Badge status={row.status} /></td>
-                        <td className="py-4 text-right"><TextLink onClick={() => {}}>Download receipt</TextLink></td>
+                        <td className="py-4 text-right">
+                            {row.proofUrl ? (
+                                <a href={row.proofUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-[#1C2317] underline underline-offset-2">
+                                    View screenshot
+                                </a>
+                            ) : (
+                                <TextLink onClick={() => {}}>Download receipt</TextLink>
+                            )}
+                        </td>
                     </tr>
                 ))}
             </tbody>

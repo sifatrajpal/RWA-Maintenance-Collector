@@ -18,14 +18,17 @@ export default function LoginForm({title, description, eyebrow, size}: LoginForm
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errorMsg, setErrorMsg] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
 
-    async function handleSubmit() {
-        const result = await LoginWithEmailAndPassword(email, password);
-        if (result?.success === false) {
-            setErrorMsg(result.message);
+        async function handleSubmit() {
+            setIsLoading(true);
+            const result = await LoginWithEmailAndPassword(email, password);
+            if (result?.success === false) {
+                setErrorMsg(result.message);
+                setIsLoading(false);
+            }
+            // no else/setIsLoading(false) needed on success — redirect() navigates away
         }
-        console.error('profile lookup error:', result)
-    }
 
     return(
         <div className="w-full max-w-md mx-auto px-6 py-12 sm:px-0">
@@ -40,7 +43,7 @@ export default function LoginForm({title, description, eyebrow, size}: LoginForm
 
             <Button
                 variant="dark"
-                children="Sign in"
+                children={isLoading ? "Signing in..." : "Sign in"}
                 onClick={handleSubmit}
 
             />

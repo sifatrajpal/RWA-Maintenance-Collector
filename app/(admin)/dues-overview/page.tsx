@@ -4,28 +4,23 @@ import PageHeader from "@/app/Components/molecules/PageHeader";
 import DuesStatsBar from "@/app/Components/organisms/DuesStatsBar";
 import DuesTable from "@/app/Components/organisms/DuesTable";
 
-
-
-
-
-
 export default async function DuesOverviewPage() {
-
     const [dues, { societyName }] = await Promise.all([getDuesOverview(), getSocietyContext()]);
 
-const rows = dues
-    .filter((d) => d.profiles)
-    .map((d) => {
-        const profile = Array.isArray(d.profiles) ? d.profiles[0] : d.profiles;
-        return {
-            id: d.id,
-            flat: profile.flat_number,
-            resident: `${profile.first_name} ${profile.last_name}`,
-            amount: d.amount,
-            status: d.status,
-            dueDate: d.due_date,
-        };
-    });
+    const rows = dues
+        .filter((d) => d.profiles)
+        .map((d) => {
+            const profile = Array.isArray(d.profiles) ? d.profiles[0] : d.profiles;
+            return {
+                id: d.id,
+                flat: profile.flat_number,
+                resident: `${profile.first_name} ${profile.last_name}`,
+                amount: d.amount,
+                status: d.status,
+                dueDate: d.due_date,
+                proofUrl: d.payment_proof_url ?? null,
+            };
+        });
 
     const totalBilled = rows.reduce((s, r) => s + r.amount, 0);
     const collected = rows.filter(r => r.status === "success").reduce((s, r) => s + r.amount, 0);

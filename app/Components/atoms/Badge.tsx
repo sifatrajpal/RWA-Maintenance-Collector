@@ -1,8 +1,9 @@
-type BadgeProps = { status: "pending" | "success" | "failed" }
+type BadgeProps = { status: "pending" | "pending_verification" | "success" | "failed" }
 
 const config = {
     success: { label: "PAID", classes: "bg-[#DCE6D5] text-[#3E5C2E]" },
     pending: { label: "PENDING", classes: "bg-[#EDE3C8] text-[#8A7A2E]" },
+    pending_verification: { label: "AWAITING REVIEW", classes: "bg-[#D9E4EC] text-[#2E5C8A]" },
     failed: { label: "FAILED", classes: "bg-[#F3D9D6] text-[#A13A2E]" },
 } as const;
 
